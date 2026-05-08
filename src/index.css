@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f4f8ff;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --line: rgba(148, 163, 184, 0.45);
+  --glow: rgba(37, 99, 235, 0.2);
+  font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+html.dark {
+  --bg: #030b1d;
+  --surface: #08132c;
+  --text: #d8e7ff;
+  --muted: #a6b7da;
+  --line: rgba(163, 197, 255, 0.22);
+  --glow: rgba(56, 189, 248, 0.34);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 8% 12%, rgba(191, 219, 254, 0.9) 0%, transparent 35%),
+    radial-gradient(circle at 92% 3%, rgba(186, 230, 253, 0.75) 0%, transparent 26%),
+    radial-gradient(circle at 90% 78%, rgba(254, 215, 170, 0.55) 0%, transparent 33%),
+    linear-gradient(165deg, #f4f8ff 0%, #eef4ff 45%, #f9fbff 100%);
+  background-attachment: fixed;
+}
+
+html.dark body {
+  background:
+    radial-gradient(circle at 10% 12%, rgba(27, 76, 172, 0.55) 0%, transparent 34%),
+    radial-gradient(circle at 82% 5%, rgba(5, 150, 105, 0.45) 0%, transparent 28%),
+    radial-gradient(circle at 84% 80%, rgba(249, 115, 22, 0.28) 0%, transparent 36%),
+    linear-gradient(160deg, #030b1d 0%, #061735 40%, #08112b 100%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  color: #0f172a;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+  color: #f8fbff;
+}
+
+p {
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.container-shell {
+  @apply mx-auto w-full max-w-[92rem] px-3 sm:px-4 lg:px-6;
+}
+
+.section-space {
+  @apply py-14 sm:py-16 lg:py-20;
+}
+
+.home-page-compact .section-space {
+  @apply py-8 sm:py-10 lg:py-12;
+}
+
+.glass {
+  @apply border border-white/15 bg-white/[0.06] backdrop-blur-xl;
+}
+
+.dark-card {
+  @apply border border-white/10 bg-slate-950/55 shadow-card backdrop-blur-xl;
+}
+
+.neon-ring {
+  box-shadow: 0 0 0 1px rgba(113, 186, 255, 0.45), 0 20px 50px -28px rgba(72, 162, 255, 0.75);
+}
+
+.surface-grid {
+  position: relative;
+}
+
+.surface-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(169, 201, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(169, 201, 255, 0.07) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 92%);
+  opacity: 0.48;
+}
+
+.noise-overlay {
+  position: relative;
+}
+
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.11'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+  opacity: 0.2;
+}
+
+.fancy-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.fancy-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: linear-gradient(180deg, #5fa6ff, #3b82f6);
+}
+
+html:not(.dark) [class*='bg-slate-950/'],
+html:not(.dark) [class*='bg-slate-900/'] {
+  background-color: rgba(255, 255, 255, 0.86) !important;
+}
+
+html:not(.dark) [class*='bg-white/[0.03]'],
+html:not(.dark) [class*='bg-white/[0.04]'],
+html:not(.dark) [class*='bg-white/[0.05]'],
+html:not(.dark) [class*='bg-white/10'] {
+  background-color: rgba(248, 250, 252, 0.95) !important;
+}
+
+html:not(.dark) [class*='border-white/'] {
+  border-color: rgba(148, 163, 184, 0.45) !important;
+}
+
+html:not(.dark) [class*='text-white'] {
+  color: #0f172a !important;
+}
+
+html:not(.dark) [class*='text-slate-100'] {
+  color: #1e293b !important;
+}
+
+html:not(.dark) [class*='text-slate-200'] {
+  color: #334155 !important;
+}
+
+html:not(.dark) [class*='text-slate-300'] {
+  color: #475569 !important;
+}
+
+html:not(.dark) .surface-grid::before {
+  opacity: 0.2;
+}
