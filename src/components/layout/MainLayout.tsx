@@ -12,11 +12,11 @@ const MainLayout = () => {
   }, [pathname])
 
   return (
-    <div className="surface-grid min-h-screen overflow-x-hidden bg-transparent text-slate-100">
+    <div className="ambient-layout min-h-screen overflow-x-hidden bg-transparent text-slate-900">
       <div className="pointer-events-none fixed inset-0 -z-10 bg-mesh-brand" />
-      <div className="pointer-events-none fixed inset-0 -z-10 noise-overlay" />
-      <div className="pointer-events-none fixed -left-32 top-20 -z-10 h-72 w-72 animate-drift rounded-full bg-cyan-400/20 blur-3xl" />
-      <div className="pointer-events-none fixed -right-32 bottom-24 -z-10 h-72 w-72 animate-drift rounded-full bg-indigo-500/20 blur-3xl [animation-delay:1.8s]" />
+      <div className="pointer-events-none fixed -left-36 top-16 -z-10 h-80 w-80 animate-drift rounded-full bg-cyan-300/30 blur-[90px]" />
+      <div className="pointer-events-none fixed right-0 top-24 -z-10 h-72 w-72 animate-float rounded-full bg-indigo-300/26 blur-[90px]" />
+      <div className="pointer-events-none fixed -right-20 bottom-20 -z-10 h-80 w-80 animate-parallax rounded-full bg-orange-200/28 blur-[100px]" />
 
       <Navbar />
       <AnimatePresence mode="wait">

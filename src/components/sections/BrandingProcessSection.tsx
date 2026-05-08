@@ -23,13 +23,13 @@ const BrandingProcessSection = () => {
         <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {steps.map((step, index) => (
             <Reveal key={step.title} delay={index * 0.09}>
-              <article className="relative rounded-[1.6rem] border border-white/15 bg-slate-900/55 p-6 text-center shadow-card backdrop-blur-xl">
-                <span className="absolute right-4 top-4 text-xs font-semibold text-slate-400">0{index + 1}</span>
-                <span className="mx-auto inline-flex rounded-xl border border-cyan-300/30 bg-cyan-300/10 p-2 text-cyan-100">
+              <article className="light-panel floating-card relative rounded-[1.6rem] p-6 text-center">
+                <span className="absolute right-4 top-4 text-xs font-semibold text-slate-500">0{index + 1}</span>
+                <span className="neu-chip mx-auto inline-flex rounded-xl p-2 text-blue-600">
                   <step.icon className="h-5 w-5" />
                 </span>
-                <h3 className="mt-4 text-xl font-semibold text-white">{step.title}</h3>
-                <p className="mt-2 text-sm text-slate-300">{step.text}</p>
+                <h3 className="mt-4 text-xl font-semibold text-slate-900">{step.title}</h3>
+                <p className="mt-2 text-sm text-slate-600">{step.text}</p>
               </article>
             </Reveal>
           ))}

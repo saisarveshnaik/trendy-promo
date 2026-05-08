@@ -21,10 +21,10 @@ const ContactPage = () => {
       <div className="container-shell max-w-5xl">
         <div className="grid gap-6 md:grid-cols-[0.9fr_1.1fr]">
           <Reveal>
-            <article className="rounded-[1.6rem] border border-white/15 bg-slate-950/60 p-6 shadow-card backdrop-blur-xl">
-              <h1 className="text-3xl font-semibold text-white">Contact Us</h1>
-              <p className="mt-3 text-sm text-slate-300">Talk with our team about product sourcing, artwork support, and bulk order planning.</p>
-              <div className="mt-4 space-y-2 text-sm text-slate-200">
+            <article className="light-glass rounded-[1.6rem] p-6">
+              <h1 className="text-3xl font-semibold text-slate-900">Contact Us</h1>
+              <p className="mt-3 text-sm text-slate-600">Talk with our team about product sourcing, artwork support, and bulk order planning.</p>
+              <div className="mt-4 space-y-2 text-sm text-slate-700">
                 <p><span className="font-semibold">Phone:</span> +1 (877) 555-0178</p>
                 <p><span className="font-semibold">Email:</span> quotes@trendypromo.com</p>
                 <p><span className="font-semibold">Hours:</span> Mon - Fri, 8AM - 6PM EST</p>
@@ -33,17 +33,17 @@ const ContactPage = () => {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <form onSubmit={submit} className="rounded-[1.6rem] border border-white/15 bg-slate-950/60 p-6 shadow-card backdrop-blur-xl">
-              <h2 className="text-xl font-semibold text-white">Send a Message</h2>
+            <form onSubmit={submit} className="light-glass rounded-[1.6rem] p-6">
+              <h2 className="text-xl font-semibold text-slate-900">Send a Message</h2>
               <div className="mt-4 grid gap-3">
-                <input required placeholder="Name" className="h-11 rounded-xl border border-white/20 bg-white/[0.03] px-3 text-sm text-white" />
-                <input required type="email" placeholder="Work email" className="h-11 rounded-xl border border-white/20 bg-white/[0.03] px-3 text-sm text-white" />
-                <input required placeholder="Company" className="h-11 rounded-xl border border-white/20 bg-white/[0.03] px-3 text-sm text-white" />
-                <textarea required rows={4} placeholder="How can we help?" className="rounded-xl border border-white/20 bg-white/[0.03] p-3 text-sm text-white" />
-                <button type="submit" className="rounded-xl bg-gradient-to-r from-cyan-300 to-blue-500 px-4 py-3 text-sm font-bold text-slate-950">
+                <input required placeholder="Name" className="input-surface h-11 rounded-xl px-3 text-sm" />
+                <input required type="email" placeholder="Work email" className="input-surface h-11 rounded-xl px-3 text-sm" />
+                <input required placeholder="Company" className="input-surface h-11 rounded-xl px-3 text-sm" />
+                <textarea required rows={4} placeholder="How can we help?" className="input-surface rounded-xl p-3 text-sm" />
+                <button type="submit" className="cta-primary px-4 py-3 text-sm">
                   Send Message
                 </button>
-                {sent ? <p className="text-sm font-semibold text-emerald-200">Your message has been received. We will reply soon.</p> : null}
+                {sent ? <p className="text-sm font-semibold text-emerald-600">Your message has been received. We will reply soon.</p> : null}
               </div>
             </form>
           </Reveal>

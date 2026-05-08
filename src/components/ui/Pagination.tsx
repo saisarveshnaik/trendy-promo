@@ -15,7 +15,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
     <nav className="flex flex-wrap items-center justify-center gap-2" aria-label="Pagination">
       <button
         type="button"
-        className="rounded-full border border-white/20 bg-white/[0.03] px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-300/50 disabled:opacity-40"
+        className="cta-secondary rounded-full px-4 py-2 text-sm disabled:opacity-40"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
@@ -30,8 +30,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
           aria-current={currentPage === page ? 'page' : undefined}
           className={`h-10 min-w-10 rounded-full px-3 text-sm font-bold transition ${
             currentPage === page
-              ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950'
-              : 'border border-white/20 bg-white/[0.03] text-slate-200 hover:border-cyan-300/50'
+              ? 'cta-primary'
+              : 'cta-secondary'
           }`}
         >
           {page}
@@ -40,7 +40,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
 
       <button
         type="button"
-        className="rounded-full border border-white/20 bg-white/[0.03] px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-300/50 disabled:opacity-40"
+        className="cta-secondary rounded-full px-4 py-2 text-sm disabled:opacity-40"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
       >

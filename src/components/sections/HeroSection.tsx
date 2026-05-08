@@ -1,126 +1,152 @@
-import { ArrowRight, BadgeCheck, Clock3, Sparkles, Users } from 'lucide-react'
+import { ArrowRight, BadgeCheck, ChevronLeft, ChevronRight, Clock3, Users } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import AnimatedCounter from '../ui/AnimatedCounter'
 import Reveal from '../ui/Reveal'
+import bannerOne from '../../assets/hero-banner-1.jpeg'
+import bannerTwo from '../../assets/hero-banner-2.jpeg'
 
 const HeroSection = () => {
-  const bannerImages = [
-    {
-      src: 'https://images.pexels.com/photos/6378651/pexels-photo-6378651.jpeg?cs=srgb&dl=pexels-melikebenli-6378651.jpg&fm=jpg',
-      alt: 'Insulated tumbler product image',
-      className: 'h-56 sm:h-72',
-    },
-    {
-      src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Polo%20shirt%20%28AM%202017.66.47-2%29.jpg',
-      alt: 'Folded polo shirt product image',
-      className: 'h-44 sm:h-52',
-    },
-    {
-      src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Power%20Bank.jpg',
-      alt: 'Portable power bank product image',
-      className: 'h-44 sm:h-52',
-    },
-    {
-      src: 'https://images.pexels.com/photos/13975271/pexels-photo-13975271.jpeg?cs=srgb&dl=pexels-borishamer-13975271.jpg&fm=jpg',
-      alt: 'Corporate gift box product image',
-      className: 'h-56 sm:h-72',
-    },
+  const banners = [
+    { src: bannerOne, alt: 'Promotional smart watch offer banner' },
+    { src: bannerTwo, alt: 'Promotional running shoes offer banner' },
   ]
+  const [activeSlide, setActiveSlide] = useState(0)
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % banners.length)
+    }, 7000)
+
+    return () => window.clearInterval(timer)
+  }, [banners.length])
+
+  const goToPrevious = () => {
+    setActiveSlide((prev) => (prev - 1 + banners.length) % banners.length)
+  }
+
+  const goToNext = () => {
+    setActiveSlide((prev) => (prev + 1) % banners.length)
+  }
 
   return (
     <section className="section-space relative overflow-hidden pt-12">
       <div className="container-shell">
-        <div className="noise-overlay relative overflow-hidden rounded-[2.2rem] border border-white/15 bg-slate-950/60 px-6 py-8 shadow-glow backdrop-blur-2xl sm:px-10 lg:px-14 lg:py-14">
-          <div className="absolute -left-14 top-16 h-40 w-40 rounded-full bg-cyan-400/30 blur-3xl" />
-          <div className="absolute right-10 top-10 h-44 w-44 rounded-full bg-indigo-500/35 blur-3xl" />
-          <div className="absolute -bottom-16 right-24 h-52 w-52 rounded-full bg-emerald-400/20 blur-3xl" />
+        <div className="light-glass relative overflow-hidden rounded-[2.2rem] p-0">
+          <div className="relative min-h-[34rem] overflow-hidden sm:min-h-[38rem]">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={banners[activeSlide].src}
+                src={banners[activeSlide].src}
+                alt={banners[activeSlide].alt}
+                initial={{ opacity: 0.35, scale: 1.03 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0.35, scale: 1.02 }}
+                transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-0 h-full w-full object-cover object-center"
+                loading="eager"
+              />
+            </AnimatePresence>
 
-          <div className="relative grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-            <Reveal className="space-y-6" y={28}>
-              <p className="inline-flex items-center gap-2 rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-cyan-100">
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-slate-950/72 via-slate-900/46 to-slate-900/26" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-950/28" />
+
+            <div className="absolute inset-y-0 left-0 z-20 hidden items-center pl-4 sm:flex">
+              <button
+                type="button"
+                onClick={goToPrevious}
+                aria-label="Previous banner"
+                className="neu-chip h-11 w-11 rounded-full text-slate-700 transition hover:-translate-y-0.5"
+              >
+                <ChevronLeft className="mx-auto h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="absolute inset-y-0 right-0 z-20 hidden items-center pr-4 sm:flex">
+              <button
+                type="button"
+                onClick={goToNext}
+                aria-label="Next banner"
+                className="neu-chip h-11 w-11 rounded-full text-slate-700 transition hover:-translate-y-0.5"
+              >
+                <ChevronRight className="mx-auto h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 gap-2">
+              {banners.map((banner, index) => (
+                <button
+                  key={banner.src}
+                  type="button"
+                  onClick={() => setActiveSlide(index)}
+                  aria-label={`Go to banner ${index + 1}`}
+                  aria-current={activeSlide === index}
+                  className={`h-2.5 rounded-full transition-all ${
+                    activeSlide === index
+                      ? 'w-8 bg-white shadow-[0_0_0_1px_rgba(255,255,255,0.35),0_4px_10px_rgba(15,23,42,0.4)]'
+                      : 'w-2.5 bg-white/55 hover:bg-white/75'
+                  }`}
+                />
+              ))}
+            </div>
+
+            <div className="relative z-10 px-6 py-10 sm:px-10 lg:px-14 lg:py-14">
+              <Reveal className="space-y-6" y={28}>
+              <p className="soft-kicker px-4 py-1.5 text-xs">
                 <BadgeCheck className="h-4 w-4" /> Trusted by fast-scaling brands
               </p>
 
-              <h1 className="text-balance text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
+              <h1 className="max-w-4xl text-balance text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
                 Promotional Products
-                <span className="bg-gradient-to-r from-cyan-200 via-blue-300 to-emerald-200 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-cyan-200 via-blue-300 to-indigo-200 bg-clip-text text-transparent">
                   {' '}
                   Reimagined for Modern B2B Buying
                 </span>
               </h1>
 
-              <p className="max-w-xl text-base text-slate-300 sm:text-lg">
+              <p className="max-w-xl text-base text-slate-100/90 sm:text-lg">
                 Deliver premium branded merchandise with lightning-fast production, elevated packaging, and conversion-
                 focused product experiences that make your brand impossible to forget.
               </p>
 
               <div className="flex flex-wrap gap-3">
                 <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
-                  <Link
-                    to="/products"
-                    className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-300 to-blue-500 px-6 py-3 text-sm font-bold text-slate-950 shadow-glow"
-                  >
+                  <Link to="/products" className="cta-primary rounded-full px-6 py-3">
                     Explore Products <ArrowRight className="h-4 w-4" />
                   </Link>
                 </motion.div>
 
                 <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
-                  <Link
-                    to="/24-hour-rush"
-                    className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-6 py-3 text-sm font-bold text-slate-100"
-                  >
+                  <Link to="/24-hour-rush" className="cta-secondary rounded-full px-6 py-3">
                     View 24 Hour Rush
                   </Link>
                 </motion.div>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-3">
-                <div className="rounded-2xl border border-white/15 bg-white/[0.03] p-4">
-                  <p className="text-xs uppercase tracking-[0.16em] text-slate-400">Products</p>
+              <div className="hidden gap-3 sm:grid sm:grid-cols-3">
+                <div className="relative overflow-hidden rounded-2xl border border-white/25 bg-white/14 p-4 backdrop-blur-sm">
+                  <p className="text-xs uppercase tracking-[0.16em] text-white/75">Products</p>
                   <p className="mt-1 text-2xl font-semibold text-white">
                     <AnimatedCounter value={1200} suffix="+" />
                   </p>
                 </div>
-                <div className="rounded-2xl border border-white/15 bg-white/[0.03] p-4">
-                  <p className="text-xs uppercase tracking-[0.16em] text-slate-400">Rush Proofs</p>
+                <div className="relative overflow-hidden rounded-2xl border border-white/25 bg-white/14 p-4 backdrop-blur-sm [animation-delay:100ms]">
+                  <p className="text-xs uppercase tracking-[0.16em] text-white/75">Rush Proofs</p>
                   <p className="mt-1 inline-flex items-center gap-2 text-2xl font-semibold text-white">
-                    <Clock3 className="h-5 w-5 text-cyan-200" /> 24h
+                    <Clock3 className="h-5 w-5 text-cyan-300" /> 24h
                   </p>
                 </div>
-                <div className="rounded-2xl border border-white/15 bg-white/[0.03] p-4">
-                  <p className="text-xs uppercase tracking-[0.16em] text-slate-400">Buyer Teams</p>
+                <div className="relative overflow-hidden rounded-2xl border border-white/25 bg-white/14 p-4 backdrop-blur-sm [animation-delay:220ms]">
+                  <p className="text-xs uppercase tracking-[0.16em] text-white/75">Buyer Teams</p>
                   <p className="mt-1 inline-flex items-center gap-2 text-2xl font-semibold text-white">
-                    <Users className="h-5 w-5 text-emerald-200" />
+                    <Users className="h-5 w-5 text-indigo-200" />
                     <AnimatedCounter value={2400} suffix="+" />
                   </p>
                 </div>
               </div>
-            </Reveal>
-
-            <Reveal className="grid grid-cols-2 gap-4" delay={0.1}>
-              {bannerImages.map((image, index) => (
-                <motion.div
-                  key={image.src}
-                  className="relative overflow-hidden rounded-[1.5rem] border border-white/20 bg-slate-900/70 shadow-card"
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.25 }}
-                  transition={{ duration: 0.55, delay: index * 0.08 }}
-                >
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className={`${image.className} w-full object-cover object-center transition duration-700 hover:scale-105`}
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent" />
-                  <div className="absolute bottom-3 left-3 inline-flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/60 px-2.5 py-1 text-[11px] text-cyan-100">
-                    <Sparkles className="h-3.5 w-3.5" /> Premium Pick
-                  </div>
-                </motion.div>
-              ))}
-            </Reveal>
+              </Reveal>
+            </div>
           </div>
         </div>
       </div>

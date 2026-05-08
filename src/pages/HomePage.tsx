@@ -1,7 +1,7 @@
 import HeroSection from '../components/sections/HeroSection'
 import LogoMarqueeSection from '../components/sections/LogoMarqueeSection'
 import CategoryTilesSection from '../components/sections/CategoryTilesSection'
-import ProductShowcaseSection from '../components/sections/ProductShowcaseSection'
+import TabbedProductShowcaseSection from '../components/sections/TabbedProductShowcaseSection'
 import WhyChooseUsSection from '../components/sections/WhyChooseUsSection'
 import BrandingProcessSection from '../components/sections/BrandingProcessSection'
 import BeforeAfterSection from '../components/sections/BeforeAfterSection'
@@ -18,7 +18,7 @@ const HomePage = () => {
       'Browse customizable promotional products, upload logos, and request bulk quotes with Trendy Promo.',
   })
 
-  const featuredProducts = productCatalog.filter((product) => product.featured).slice(0, 8)
+  const featuredProducts = productCatalog.filter((product) => product.featured).slice(0, 4)
   const dealProducts = productCatalog.filter((product) => product.deal).slice(0, 4)
   const rushProducts = productCatalog.filter((product) => product.rush).slice(0, 4)
 
@@ -42,23 +42,34 @@ const HomePage = () => {
       <HeroSection />
       <LogoMarqueeSection />
       <CategoryTilesSection />
-      <ProductShowcaseSection
-        kicker="Featured"
-        title="Most Requested Branded Products"
-        description="High-performing promotional products selected by our sourcing team for quality, pricing, and impact."
-        products={featuredProducts}
-      />
-      <ProductShowcaseSection
-        kicker="Limited Time"
-        title="Today&apos;s Deals"
-        description="Special bulk pricing available for immediate quote requests."
-        products={dealProducts}
-      />
-      <ProductShowcaseSection
-        kicker="Express"
-        title="24 Hour Rush Collection"
-        description="Need merch urgently? These products are configured for fast proof and production turnarounds."
-        products={rushProducts}
+      <TabbedProductShowcaseSection
+        collections={[
+          {
+            id: 'featured',
+            label: 'Most Requested',
+            kicker: 'Featured',
+            title: 'Most Requested Branded Products',
+            description:
+              'High-performing promotional products selected by our sourcing team for quality, pricing, and impact.',
+            products: featuredProducts,
+          },
+          {
+            id: 'deals',
+            label: "Today's Deals",
+            kicker: 'Limited Time',
+            title: "Today's Deals",
+            description: 'Special bulk pricing available for immediate quote requests.',
+            products: dealProducts,
+          },
+          {
+            id: 'rush',
+            label: '24 Hour Rush',
+            kicker: 'Express',
+            title: '24 Hour Rush Collection',
+            description: 'Need merch urgently? These products are configured for fast proof and production turnarounds.',
+            products: rushProducts,
+          },
+        ]}
       />
       <WhyChooseUsSection />
       <BrandingProcessSection />

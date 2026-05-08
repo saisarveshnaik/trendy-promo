@@ -27,14 +27,14 @@ const CategoriesPage = () => {
               <Reveal key={category} delay={index * 0.06}>
                 <Link
                   to={`/products?category=${encodeURIComponent(category)}`}
-                  className="group block rounded-[1.6rem] border border-white/15 bg-slate-950/60 p-6 shadow-card backdrop-blur-xl transition hover:-translate-y-1"
+                  className="light-panel group floating-card block rounded-[1.6rem] p-6 transition hover:-translate-y-1"
                 >
-                  <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-cyan-100">
+                  <p className="neu-chip inline-flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-bold uppercase tracking-[0.18em] text-blue-600">
                     <Sparkles className="h-3.5 w-3.5" /> Category
                   </p>
-                  <h2 className="mt-2 text-2xl font-semibold text-white">{category}</h2>
-                  <p className="mt-2 text-sm text-slate-300">{count} products available for customization.</p>
-                  <p className="mt-4 text-sm font-semibold text-cyan-100">View products</p>
+                  <h2 className="mt-2 text-2xl font-semibold text-slate-900">{category}</h2>
+                  <p className="mt-2 text-sm text-slate-600">{count} products available for customization.</p>
+                  <p className="mt-4 text-sm font-semibold text-blue-600">View products</p>
                 </Link>
               </Reveal>
             )

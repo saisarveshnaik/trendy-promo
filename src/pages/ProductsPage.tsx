@@ -1,11 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useRef } from 'react'
 import type { FormEvent } from 'react'
 import { Filter, Search, SlidersHorizontal, Sparkles } from 'lucide-react'
 import { useSearchParams } from 'react-router-dom'
 import ProductCard from '../components/ui/ProductCard'
 import Pagination from '../components/ui/Pagination'
 import SectionHeading from '../components/ui/SectionHeading'
-import SkeletonCard from '../components/ui/SkeletonCard'
 import Reveal from '../components/ui/Reveal'
 import { categories, productCatalog } from '../data/products'
 import { usePageMeta } from '../hooks/usePageMeta'
@@ -19,8 +18,7 @@ const ProductsPage = () => {
   })
 
   const [searchParams, setSearchParams] = useSearchParams()
-  const [loading, setLoading] = useState(true)
-  const [draftSearch, setDraftSearch] = useState(searchParams.get('search') ?? '')
+  const searchInputRef = useRef<HTMLInputElement | null>(null)
 
   const categoryFilter = searchParams.get('category') ?? 'All'
   const sortFilter = searchParams.get('sort') ?? 'featured'
@@ -28,10 +26,6 @@ const ProductsPage = () => {
   const page = Number(searchParams.get('page') ?? '1')
 
   const categoryOptions = ['All', ...categories]
-
-  useEffect(() => {
-    setDraftSearch(searchTerm)
-  }, [searchTerm])
 
   const filteredProducts = useMemo(() => {
     const query = searchTerm.toLowerCase().trim()
@@ -67,12 +61,6 @@ const ProductsPage = () => {
     currentPage * PRODUCTS_PER_PAGE,
   )
 
-  useEffect(() => {
-    setLoading(true)
-    const timer = window.setTimeout(() => setLoading(false), 320)
-    return () => window.clearTimeout(timer)
-  }, [categoryFilter, sortFilter, searchTerm, currentPage])
-
   const updateParams = (updates: Record<string, string>) => {
     const next = new URLSearchParams(searchParams)
 
@@ -89,7 +77,8 @@ const ProductsPage = () => {
 
   const handleSearchSubmit = (event: FormEvent) => {
     event.preventDefault()
-    updateParams({ search: draftSearch.trim(), page: '1' })
+    const nextSearch = searchInputRef.current?.value.trim() ?? ''
+    updateParams({ search: nextSearch, page: '1' })
   }
 
   return (
@@ -101,7 +90,7 @@ const ProductsPage = () => {
           description="Filter by category, compare pricing tiers, and customize products before requesting your quote."
         />
 
-        <Reveal className="mt-4 rounded-2xl border border-cyan-300/20 bg-cyan-300/10 px-4 py-3 text-sm text-cyan-50">
+        <Reveal className="neu-highlight mt-4 rounded-2xl px-4 py-3 text-sm text-blue-700">
           <p className="inline-flex items-center gap-2">
             <Sparkles className="h-4 w-4" />
             Explore premium merchandise with live filtering, instant search, and fast quote pathways.
@@ -110,8 +99,8 @@ const ProductsPage = () => {
 
         <div className="mt-8 grid gap-6 lg:grid-cols-[260px_1fr]">
           <Reveal>
-            <aside className="h-fit rounded-[1.6rem] border border-white/15 bg-slate-950/55 p-5 shadow-card backdrop-blur-xl">
-              <h3 className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-cyan-100">
+            <aside className="light-glass h-fit rounded-[1.6rem] p-5">
+              <h3 className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
                 <Filter className="h-4 w-4" /> Filters
               </h3>
 
@@ -125,8 +114,8 @@ const ProductsPage = () => {
                       onClick={() => updateParams({ category, page: '1' })}
                       className={`w-full rounded-xl px-3 py-2 text-left text-sm font-semibold transition ${
                         isActive
-                          ? 'bg-gradient-to-r from-cyan-300 to-blue-500 text-slate-950'
-                          : 'border border-white/10 bg-white/[0.03] text-slate-200 hover:border-cyan-300/50'
+                          ? 'cta-primary'
+                          : 'cta-secondary'
                       }`}
                     >
                       {category}
@@ -138,22 +127,23 @@ const ProductsPage = () => {
           </Reveal>
 
           <div>
-            <Reveal className="mb-5 flex flex-col gap-3 rounded-2xl border border-white/15 bg-slate-950/55 p-4 shadow-card backdrop-blur-xl md:flex-row md:items-center md:justify-between">
+            <Reveal className="light-glass mb-5 flex flex-col gap-3 rounded-2xl p-4 md:flex-row md:items-center md:justify-between">
               <form
                 onSubmit={handleSearchSubmit}
-                className="flex w-full items-center gap-2 rounded-xl border border-white/15 bg-white/[0.03] px-3 py-2 md:max-w-sm"
+                className="neu-pill-inset flex w-full items-center gap-2 rounded-xl px-3 py-2 md:max-w-sm"
               >
-                <Search className="h-4 w-4 text-slate-400" />
+                <Search className="h-4 w-4 text-slate-500" />
                 <input
-                  value={draftSearch}
-                  onChange={(event) => setDraftSearch(event.target.value)}
+                  key={searchTerm}
+                  ref={searchInputRef}
+                  defaultValue={searchTerm}
                   placeholder="Search by product, category, feature"
-                  className="w-full border-0 bg-transparent text-sm text-white outline-none placeholder:text-slate-500"
+                  className="w-full border-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-500"
                 />
               </form>
 
               <div className="inline-flex items-center gap-2">
-                <SlidersHorizontal className="h-4 w-4 text-slate-300" />
+                <SlidersHorizontal className="h-4 w-4 text-slate-500" />
                 <label className="sr-only" htmlFor="sort-products">
                   Sort products
                 </label>
@@ -161,7 +151,7 @@ const ProductsPage = () => {
                   id="sort-products"
                   value={sortFilter}
                   onChange={(event) => updateParams({ sort: event.target.value, page: '1' })}
-                  className="rounded-xl border border-white/15 bg-white/[0.03] px-3 py-2 text-sm font-semibold text-slate-100"
+                  className="input-surface rounded-xl px-3 py-2 text-sm font-semibold text-slate-700"
                 >
                   <option value="featured">Featured first</option>
                   <option value="price-asc">Price: low to high</option>
@@ -171,13 +161,7 @@ const ProductsPage = () => {
               </div>
             </Reveal>
 
-            {loading ? (
-              <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <SkeletonCard key={index} />
-                ))}
-              </div>
-            ) : paginatedProducts.length ? (
+            {paginatedProducts.length ? (
               <>
                 <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
                   {paginatedProducts.map((product) => (
@@ -193,12 +177,12 @@ const ProductsPage = () => {
                 </div>
               </>
             ) : (
-              <div className="rounded-2xl border border-dashed border-white/25 bg-slate-950/50 p-8 text-center">
-                <p className="text-sm text-slate-300">No products found for your current filters.</p>
+              <div className="light-panel rounded-2xl border border-dashed border-slate-300/75 p-8 text-center">
+                <p className="text-sm text-slate-600">No products found for your current filters.</p>
                 <button
                   type="button"
                   onClick={() => setSearchParams({ category: 'All', sort: 'featured' })}
-                  className="mt-4 rounded-xl bg-gradient-to-r from-cyan-300 to-blue-500 px-4 py-2 text-sm font-bold text-slate-950"
+                  className="cta-primary mt-4 px-4 py-2"
                 >
                   Reset filters
                 </button>

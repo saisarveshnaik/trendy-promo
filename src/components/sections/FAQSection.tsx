@@ -22,15 +22,15 @@ const FAQSection = () => {
             const isOpen = activeItem === index
             return (
               <Reveal key={item.question} delay={index * 0.04}>
-                <article className="overflow-hidden rounded-2xl border border-white/15 bg-slate-900/55 backdrop-blur-xl">
+                <article className="light-panel overflow-hidden rounded-2xl">
                   <button
                     type="button"
                     onClick={() => setActiveItem(isOpen ? -1 : index)}
                     className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left"
                     aria-expanded={isOpen}
                   >
-                    <h3 className="text-sm font-semibold text-white sm:text-base">{item.question}</h3>
-                    <ChevronDown className={`h-5 w-5 text-slate-300 transition ${isOpen ? 'rotate-180' : ''}`} />
+                    <h3 className="text-sm font-semibold text-slate-800 sm:text-base">{item.question}</h3>
+                    <ChevronDown className={`h-5 w-5 text-slate-500 transition ${isOpen ? 'rotate-180' : ''}`} />
                   </button>
 
                   <AnimatePresence initial={false}>
@@ -41,7 +41,7 @@ const FAQSection = () => {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.25 }}
                       >
-                        <p className="px-5 pb-4 text-sm text-slate-300">{item.answer}</p>
+                        <p className="px-5 pb-4 text-sm text-slate-600">{item.answer}</p>
                       </motion.div>
                     ) : null}
                   </AnimatePresence>

@@ -1,0 +1,9 @@
+<svg width="260" height="72" viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pinnacleLabsTitle">
+  <title id="pinnacleLabsTitle">Pinnacle Labs</title>
+  <g fill="#0b0f19">
+    <path d="M18 52l16-32 16 32h-9l-7-14-7 14z"/>
+    <rect x="54" y="20" width="8" height="32"/>
+  </g>
+  <text x="76" y="42" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#0b0f19" letter-spacing="0.8">PINNACLE</text>
+  <text x="76" y="58" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#0b0f19" letter-spacing="3">LABS</text>
+</svg>
